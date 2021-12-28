@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   HomeIcon,
   SearchIcon,
@@ -8,20 +8,33 @@ import {
   RssIcon,
 } from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
+import useEufy from "../hooks/useEufy";
+import { useRecoilState } from "recoil";
+import { playlistIdState } from "../atom/playlistAtom";
 
 function Sidebar() {
+  const EufyApi = useEufy();
   const { data: session, status } = useSession();
-  console.log(session);
-  return (
-    <div className="text-gray-500 p-5 text-sm border-r border-gray-900">
-      <div className="space-y-4">
+  const [playlist, setPlaylist] = useState([]);
+  const [playlistid, setPlaylistId] = useRecoilState(playlistIdState);
 
-        <button
-          className="flex items-center space-x-2 hover:text-white"
-          onClick={() => signOut()}
-        >
-          <p>Log out</p>
-        </button>
+  useEffect(() => {
+    if (EufyApi.getAccessToken()) {
+      EufyApi.getUserPlaylists().then((data) => {
+        setPlaylist(data.body.items);
+      });
+    }
+  }, [session, EufyApi]);
+
+  //console.log(session);
+  //console.log(playlist);
+  //console.log(playlistid)
+  return (
+    <div
+      className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll
+    h-screen scrollbar-hide sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex "
+    >
+      <div className="space-y-4">
 
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="h-5 w-5" />
@@ -54,7 +67,16 @@ function Sidebar() {
         <hr className="border-t-[0.1px] border-gray-900" />
 
         {/* Playlist */}
-        <h1 className="cursor-pointer hover:text-white">Playlist here...</h1>
+
+        {playlist.map((items) => (
+          <p
+            key={items.id}
+            className="cursor-pointer hover:text-white"
+            onClick={() => setPlaylistId(items.id)}
+          >
+            {items.name}
+          </p>
+        ))}
       </div>
     </div>
   );
