@@ -7,17 +7,20 @@ import Sidebar from '../components/Sidebar'
 export default function Home() {
   return (
     <div className="bg-black h-screen overflow-hidden">
-      
+      <Head>
+        <title>eufy (Spotify Clone)</title>
+        
+      </Head>
       <main className="flex">
         <Sidebar />
         <Center />
       </main>
 
-      <div className='sticky bottom-0'>
+      <div className="sticky bottom-0">
         <Player />
       </div>
     </div>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
