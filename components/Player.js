@@ -32,7 +32,7 @@ function Player() {
   const fetchCurrentSong = () => {
     if (!songInfo) {
       EufyApi.getMyCurrentPlayingTrack().then((data) => {
-        console.log("Now Playing: ", data?.body?.item);
+        //console.log("Now Playing: ", data?.body?.item);
         setCurrentTrackId(data.body?.item?.id);
 
         EufyApi.getMyCurrentPlaybackState().then((data) => {
@@ -56,23 +56,23 @@ function Player() {
   useEffect(() => {
     if (EufyApi.getAccessToken() && !currentTrackId) {
       fetchCurrentSong();
-      setVolume(50);
+      //setVolume(50);
     }
   }, [currentTrackId, EufyApi, session]);
 
   // For volume 
-  useEffect(() => {
-    if( volume > 0 && volume < 100){
-      debouncedAdjustVolume(volume);
-    }
-  }, [volume])
+  // useEffect(() => {
+  //   if( volume > 0 && volume < 100){
+  //     debouncedAdjustVolume(volume);
+  //   }
+  // }, [volume])
 
-  const debouncedAdjustVolume = useCallback(
-    debounce((volume) => {
-      EufyApi.setVolume(volume).catch((err) => {});
-    }, 500),
-    []
-  )
+  // const debouncedAdjustVolume = useCallback(
+  //   debounce((volume) => {
+  //     EufyApi.setVolume(volume).catch((err) => {});
+  //   }, 500),
+  //   []
+  // )
 
   const handlePlayPause = () => {
     EufyApi.getMyCurrentPlaybackState().then((data) => {
@@ -108,7 +108,7 @@ function Player() {
       <div className="flex items-center justify-evenly ">
         <SwitchHorizontalIcon className="button" />
         <RewindIcon
-          onClick={() => EufyApi.skipToPrevious()}
+          //onClick={() => EufyApi.skipToPrevious()}
           className="button"
         />
 
@@ -119,7 +119,7 @@ function Player() {
         )}
 
         <FastForwardIcon
-          onClick={() => EufyApi.skipToNext()}
+          //onClick={() => EufyApi.skipToNext()}
           className="button"
         />
 
