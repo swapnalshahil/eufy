@@ -12,4 +12,6 @@ eufy is a spotify clone just for learning purpose works for only Spotify Premium
 
 ## Preview
 
+![local](https://raw.githubusercontent.com/swapnalshahil/eufy/main/img/local.png?token=AN6Z3MPYP7RHUDSS3OJMGU3B2WHUY)
+
 Reference: https://developer.spotify.com/documentation/general/guides/ 
